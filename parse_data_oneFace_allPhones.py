@@ -39,7 +39,7 @@ sheet.write(0, 1, u"SonyXA")
 workbook.save(store_to)
 
 
-for t in range(0, len(open_file)):          # 開啟t個txt檔
+for t in range(0, len(open_file)):          # 開啟len(open_file)個txt檔
 
     f = open_file[t].decode('utf8')         # 用utf8解碼
     with open(f) as f:
@@ -47,7 +47,7 @@ for t in range(0, len(open_file)):          # 開啟t個txt檔
 
     excel_row_count = 0
     excel_col_count = t
-    hundred = 1                             # 紀錄
+    hundred = 1                             # 紀錄要往後讀幾個字元
 
     for j in range(4, 124, 4):              # 只讀取30個rssi值，用四的倍數是因為通常rssi都是兩位數，
                                             # 所以會是空白+負號+兩個數字，共四個字元
@@ -57,7 +57,7 @@ for t in range(0, len(open_file)):          # 開啟t個txt檔
         elif int(data[0][j-3+hundred:j-1+hundred]) < 20:        # 萬一rssi是三位數
             print("error")
             sheet.write(excel_row_count, excel_col_count, int(data[0][j-3+hundred:j+hundred]))
-                                                                    # 只存二位數，不存空白與負號
+                                                                    # 只存三位數，不存空白與負號
                                                                                 # 沒有減一，因為要多讀一個字元
             workbook.save(store_to)
             hundred += 1                    # 紀錄之後都要往後讀一個字元
